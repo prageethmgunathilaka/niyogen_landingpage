@@ -1,0 +1,256 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title>NiyoGen Architecture</title>
+  <desc>User prompts → FastGraph Swarm Builder → EvolSpace (evolve/guardrails) → External systems</desc>
+  
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f0f1e"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+    
+    <!-- Primary gradient for accents -->
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="50%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    
+    <!-- Panel gradient -->
+    <linearGradient id="panelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+    
+    <!-- Glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Shadow effect -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="0" dy="4" result="offsetblur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.3"/>
+      <feComposite in2="offsetblur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Arrow marker -->
+    <marker id="arrowEnd" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 L3,6 z" fill="url(#primaryGrad)" opacity="0.9"/>
+    </marker>
+    
+    <!-- Styles -->
+    <style>
+      .panel {
+        fill: url(#panelGrad);
+        stroke: rgba(99, 102, 241, 0.3);
+        stroke-width: 1;
+        filter: url(#shadow);
+      }
+      .panel-hover {
+        fill: url(#panelGrad);
+        stroke: rgba(99, 102, 241, 0.6);
+        stroke-width: 1.5;
+        filter: url(#glow);
+        transition: all 0.3s ease;
+      }
+      .title {
+        fill: #f1f5f9;
+        font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+      .subtitle {
+        fill: #94a3b8;
+        font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.6;
+      }
+      .tag {
+        fill: #1e293b;
+        stroke: rgba(148, 163, 184, 0.3);
+        stroke-width: 1;
+      }
+      .tag-text {
+        fill: #cbd5e1;
+        font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .flow-arrow {
+        stroke: url(#primaryGrad);
+        stroke-width: 2.5;
+        fill: none;
+        marker-end: url(#arrowEnd);
+        stroke-linecap: round;
+        opacity: 0.8;
+      }
+      .icon {
+        fill: url(#primaryGrad);
+        opacity: 0.8;
+      }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="600" fill="url(#bgGrad)"/>
+  
+  <!-- Grid pattern -->
+  <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <rect width="1" height="40" fill="rgba(148, 163, 184, 0.05)"/>
+    <rect width="40" height="1" fill="rgba(148, 163, 184, 0.05)"/>
+  </pattern>
+  <rect width="1200" height="600" fill="url(#grid)"/>
+  
+  <!-- 1. User prompts -->
+  <g transform="translate(60, 80)">
+    <rect class="panel" rx="16" width="280" height="140"/>
+    
+    <!-- Icon -->
+    <g transform="translate(20, 20)">
+      <circle cx="20" cy="20" r="20" fill="rgba(59, 130, 246, 0.1)"/>
+      <path class="icon" d="M20,10 C14.5,10 10,14.5 10,20 C10,25.5 14.5,30 20,30 C25.5,30 30,25.5 30,20 C30,14.5 25.5,10 20,10 M20,13 C22.8,13 25,15.2 25,18 C25,20.8 22.8,23 20,23 C17.2,23 15,20.8 15,18 C15,15.2 17.2,13 20,13" transform="scale(0.8)"/>
+    </g>
+    
+    <text class="title" x="70" y="40">Users</text>
+    <text class="subtitle" x="20" y="75">Provide prompts to build</text>
+    <text class="subtitle" x="20" y="95">agent swarms</text>
+    <text class="subtitle" x="20" y="115" font-weight="500" fill="#60a5fa">No code required</text>
+  </g>
+  
+  <!-- 2. Swarm Builder -->
+  <g transform="translate(420, 60)">
+    <rect class="panel" rx="16" width="320" height="180"/>
+    
+    <!-- Icon -->
+    <g transform="translate(20, 20)">
+      <circle cx="20" cy="20" r="20" fill="rgba(139, 92, 246, 0.1)"/>
+      <path class="icon" d="M20,8 L28,16 L24,16 L24,24 L28,24 L20,32 L12,24 L16,24 L16,16 L12,16 Z" transform="scale(0.8)"/>
+    </g>
+    
+    <text class="title" x="70" y="40">FastGraph Swarm Builder</text>
+    <text class="subtitle" x="20" y="75">Compose multi-agent workflows</text>
+    <text class="subtitle" x="20" y="95">Prompt-defined roles and tools</text>
+    <text class="subtitle" x="20" y="115">Orchestration &amp; reliability</text>
+    
+    <!-- Features -->
+    <g transform="translate(20, 135)">
+      <rect class="tag" rx="12" width="80" height="24"/>
+      <text class="tag-text" x="40" y="17" text-anchor="middle">Workflow</text>
+    </g>
+    <g transform="translate(110, 135)">
+      <rect class="tag" rx="12" width="80" height="24"/>
+      <text class="tag-text" x="40" y="17" text-anchor="middle">Tools</text>
+    </g>
+    <g transform="translate(200, 135)">
+      <rect class="tag" rx="12" width="100" height="24"/>
+      <text class="tag-text" x="50" y="17" text-anchor="middle">Orchestrate</text>
+    </g>
+  </g>
+  
+  <!-- 3. EvolSpace -->
+  <g transform="translate(820, 60)">
+    <rect class="panel" rx="16" width="320" height="180"/>
+    
+    <!-- Icon -->
+    <g transform="translate(20, 20)">
+      <circle cx="20" cy="20" r="20" fill="rgba(236, 72, 153, 0.1)"/>
+      <path class="icon" d="M20,10 L25,15 L30,10 L30,20 L25,25 L20,20 L15,25 L10,20 L10,10 L15,15 Z" transform="scale(0.8)"/>
+    </g>
+    
+    <text class="title" x="70" y="40">EvolSpace</text>
+    <text class="subtitle" x="20" y="75">Agent evolution &amp; evaluation</text>
+    <text class="subtitle" x="20" y="95">Fine-tuning with guardrails</text>
+    <text class="subtitle" x="20" y="115">Approvals &amp; audit trails</text>
+    
+    <!-- Features -->
+    <g transform="translate(20, 135)">
+      <rect class="tag" rx="12" width="70" height="24"/>
+      <text class="tag-text" x="35" y="17" text-anchor="middle">Evolve</text>
+    </g>
+    <g transform="translate(100, 135)">
+      <rect class="tag" rx="12" width="90" height="24"/>
+      <text class="tag-text" x="45" y="17" text-anchor="middle">Guardrails</text>
+    </g>
+    <g transform="translate(200, 135)">
+      <rect class="tag" rx="12" width="70" height="24"/>
+      <text class="tag-text" x="35" y="17" text-anchor="middle">Audit</text>
+    </g>
+  </g>
+  
+  <!-- 4. External systems -->
+  <g transform="translate(60, 320)">
+    <rect class="panel" rx="16" width="1080" height="220"/>
+    
+    <!-- Icon -->
+    <g transform="translate(20, 20)">
+      <circle cx="20" cy="20" r="20" fill="rgba(34, 197, 94, 0.1)"/>
+      <path class="icon" d="M20,10 C14.5,10 10,14.5 10,20 C10,25.5 14.5,30 20,30 M20,10 C25.5,10 30,14.5 30,20 C30,25.5 25.5,30 20,30 M10,20 L30,20 M20,10 L20,30" transform="scale(0.8)"/>
+    </g>
+    
+    <text class="title" x="70" y="40">External Systems &amp; Tools</text>
+    <text class="subtitle" x="20" y="75">Seamless integration with your existing infrastructure</text>
+    
+    <!-- System cards -->
+    <g transform="translate(20, 100)">
+      <!-- CRM -->
+      <g transform="translate(0, 0)">
+        <rect class="tag" rx="12" width="200" height="80" fill="rgba(59, 130, 246, 0.05)" stroke="rgba(59, 130, 246, 0.2)"/>
+        <text class="tag-text" x="100" y="30" text-anchor="middle" font-size="14" font-weight="600">CRM</text>
+        <text class="tag-text" x="100" y="50" text-anchor="middle" font-size="12" opacity="0.7">Customer Management</text>
+      </g>
+      
+      <!-- Ticketing -->
+      <g transform="translate(220, 0)">
+        <rect class="tag" rx="12" width="200" height="80" fill="rgba(139, 92, 246, 0.05)" stroke="rgba(139, 92, 246, 0.2)"/>
+        <text class="tag-text" x="100" y="30" text-anchor="middle" font-size="14" font-weight="600">Ticketing</text>
+        <text class="tag-text" x="100" y="50" text-anchor="middle" font-size="12" opacity="0.7">Support Systems</text>
+      </g>
+      
+      <!-- Monitoring -->
+      <g transform="translate(440, 0)">
+        <rect class="tag" rx="12" width="200" height="80" fill="rgba(236, 72, 153, 0.05)" stroke="rgba(236, 72, 153, 0.2)"/>
+        <text class="tag-text" x="100" y="30" text-anchor="middle" font-size="14" font-weight="600">Monitoring</text>
+        <text class="tag-text" x="100" y="50" text-anchor="middle" font-size="12" opacity="0.7">Analytics &amp; Metrics</text>
+      </g>
+      
+      <!-- Data -->
+      <g transform="translate(660, 0)">
+        <rect class="tag" rx="12" width="180" height="80" fill="rgba(34, 197, 94, 0.05)" stroke="rgba(34, 197, 94, 0.2)"/>
+        <text class="tag-text" x="90" y="30" text-anchor="middle" font-size="14" font-weight="600">Data</text>
+        <text class="tag-text" x="90" y="50" text-anchor="middle" font-size="12" opacity="0.7">Storage &amp; APIs</text>
+      </g>
+      
+      <!-- Model Providers -->
+      <g transform="translate(860, 0)">
+        <rect class="tag" rx="12" width="180" height="80" fill="rgba(251, 191, 36, 0.05)" stroke="rgba(251, 191, 36, 0.2)"/>
+        <text class="tag-text" x="90" y="30" text-anchor="middle" font-size="14" font-weight="600">AI Models</text>
+        <text class="tag-text" x="90" y="50" text-anchor="middle" font-size="12" opacity="0.7">LLM Providers</text>
+      </g>
+    </g>
+  </g>
+  
+  <!-- Flow arrows -->
+  <path class="flow-arrow" d="M 340,150 C 380,150 380,150 420,150"/>
+  <path class="flow-arrow" d="M 740,150 C 780,150 780,150 820,150"/>
+  <path class="flow-arrow" d="M 580,240 C 580,280 580,280 580,320"/>
+  <path class="flow-arrow" d="M 980,240 C 980,280 980,280 980,320"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="200" cy="150" r="3" fill="url(#primaryGrad)" opacity="0.6"/>
+  <circle cx="580" cy="150" r="3" fill="url(#primaryGrad)" opacity="0.6"/>
+  <circle cx="980" cy="150" r="3" fill="url(#primaryGrad)" opacity="0.6"/>
+  <circle cx="580" cy="280" r="3" fill="url(#primaryGrad)" opacity="0.6"/>
+  <circle cx="980" cy="280" r="3" fill="url(#primaryGrad)" opacity="0.6"/>
+</svg>
